@@ -68,11 +68,10 @@ class RockPaperScissor(object):
         test_images, test_labels = next(self.test_generator)
         Predictions = self.model.predict_generator(self.test_generator,steps=test_step)
         P = np.argmax(Predictions,axis=1)
-        targets = self.test_generator.labels
-
-        assert len(P) == len(targets),"please check the test step"
-        test_accuracy = np.mean(P == targets)
-        print("test accuracy : ",test_accuracy)
+        loss , accuracy = self.model.evaluate_generator(self.test_generator, steps=test_step)
+        print("test loss : ",loss)
+        print("test accuracy : ",accuracy)
+        print("Predictions : ",P)
 
 if __name__ == "__main__":
     model = RockPaperScissor()
